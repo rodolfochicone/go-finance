@@ -24,7 +24,7 @@ SELECT a.id,
        c.title AS category_title
   FROM accounts a
   LEFT JOIN categories c ON c.id = a.category_id
- WHERE a.id = $1
+ WHERE a.user_id = $1
    AND a.type = $2
    AND a.category_id = $3
    AND a.title like $4

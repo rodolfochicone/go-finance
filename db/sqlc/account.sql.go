@@ -77,7 +77,7 @@ SELECT a.id,
        c.title AS category_title
   FROM accounts a
   LEFT JOIN categories c ON c.id = a.category_id
- WHERE a.id = $1
+ WHERE a.user_id = $1
    AND a.type = $2
    AND a.category_id = $3
    AND a.title like $4
@@ -86,7 +86,7 @@ SELECT a.id,
 `
 
 type GetAccountsParams struct {
-	ID          int32     `json:"id"`
+	UserID      int32     `json:"user_id"`
 	Type        string    `json:"type"`
 	CategoryID  int32     `json:"category_id"`
 	Title       string    `json:"title"`
@@ -109,7 +109,7 @@ type GetAccountsRow struct {
 
 func (q *Queries) GetAccounts(ctx context.Context, arg GetAccountsParams) ([]GetAccountsRow, error) {
 	rows, err := q.db.QueryContext(ctx, getAccounts,
-		arg.ID,
+		arg.UserID,
 		arg.Type,
 		arg.CategoryID,
 		arg.Title,
