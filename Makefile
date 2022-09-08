@@ -12,5 +12,7 @@ sqlcGenerate:
 	docker run --rm -v "%cd%:/src" -w /src kjconroy/sqlc generate
 test:
 	go test -v ./...
+server:
+	go run main.go
 
-.PHONY: createDb dropDb postgres migrateUp migrateDown sqlcGenerate test
+.PHONY: createDb dropDb postgres migrateUp migrateDown sqlcGenerate test server
