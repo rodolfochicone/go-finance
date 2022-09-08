@@ -13,7 +13,10 @@ type Server struct {
 func NewServer(store *db.SQLStore) *Server {
 	server := &Server{store: store}
 	router := gin.Default()
-	routes(server)
+
+	router.POST("/users", server.CreateUser)
+	router.GET("/users/username/:username", server.GetUser)
+	router.GET("/users/:id", server.GetUserByID)
 
 	server.router = router
 	return server
@@ -25,10 +28,4 @@ func (server *Server) Start(address string) error {
 
 func errorResponse(err error) gin.H {
 	return gin.H{"api has error": err.Error()}
-}
-
-func routes(server *Server) {
-	server.router.POST("/users", server.CreateUser)
-	server.router.GET("/users/:username", server.GetUser)
-	server.router.GET("/users/:id", server.GetUserByID)
 }

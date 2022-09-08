@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	_ "github.com/lib/pq"
 	"github.com/rodolfochicone/go-finance/api"
 	db "github.com/rodolfochicone/go-finance/db/sqlc"
 	"log"
