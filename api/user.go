@@ -40,14 +40,14 @@ func (Server *Server) CreateUser(ctx *gin.Context) {
 	}
 
 	user.Password = ""
-	ctx.JSON(http.StatusOK, user)
+	ctx.JSON(http.StatusCreated, user)
 }
 
 type getUserRequest struct {
 	Username string `uri:"username" binding:"required"`
 }
 
-func (server *Server) GetUser(ctx *gin.Context) {
+func (server *Server) GetUserByUsername(ctx *gin.Context) {
 	var req getUserRequest
 	if err := ctx.ShouldBindUri(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
