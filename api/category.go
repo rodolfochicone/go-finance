@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	db "github.com/rodolfochicone/go-finance/db/sqlc"
+	"github.com/rodolfochicone/go-finance/utils"
 	"net/http"
 )
 
@@ -14,6 +15,7 @@ type createCategoryRequest struct {
 }
 
 func (server *Server) CreateCategory(ctx *gin.Context) {
+	utils.ValidateToken(ctx)
 	var req createCategoryRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
@@ -77,14 +79,14 @@ func (server *Server) DeleteCategoryByID(ctx *gin.Context) {
 }
 
 type updateCategoryRequest struct {
-	ID          int32  `uri:"id" binding:"required"`
+	ID          int32  `json:"id" binding:"required"`
 	Title       string `json:"title"`
 	Description string `json:"description"`
 }
 
 func (server *Server) UpdateCategory(ctx *gin.Context) {
 	var req updateCategoryRequest
-	if err := ctx.ShouldBindUri(&req); err != nil {
+	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}

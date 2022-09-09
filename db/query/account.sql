@@ -31,6 +31,127 @@ SELECT a.id,
    AND a.description like $5
    AND a.date = $6;
 
+-- name: GetAccountsByUserIdAndType :many
+SELECT a.id,
+       a.user_id,
+       a.category_id,
+       a.title,
+       a.type,
+       a.description,
+       a.value,
+       a.date,
+       a.created_at,
+       c.title AS category_title
+ FROM accounts a
+ LEFT JOIN categories c ON c.id = a.category_id
+WHERE a.user_id = $1
+  AND a.type = $2;
+
+-- name: GetAccountsByUserIdAndTypeAndDate :many
+SELECT a.id,
+       a.user_id,
+       a.category_id,
+       a.title,
+       a.type,
+       a.description,
+       a.value,
+       a.date,
+       a.created_at,
+       c.title AS category_title
+FROM accounts a
+         LEFT JOIN categories c ON c.id = a.category_id
+WHERE a.user_id = $1
+  AND a.type = $2
+  AND a.date = $3;
+
+-- name: GetAccountsByUserIdAndTypeAndDescription :many
+SELECT a.id,
+       a.user_id,
+       a.category_id,
+       a.title,
+       a.type,
+       a.description,
+       a.value,
+       a.date,
+       a.created_at,
+       c.title AS category_title
+FROM accounts a
+         LEFT JOIN categories c ON c.id = a.category_id
+WHERE a.user_id = $1
+  AND a.type = $2
+  AND a.description like $3;
+
+-- name: GetAccountsByUserIdAndTypeAndTitle :many
+SELECT a.id,
+       a.user_id,
+       a.category_id,
+       a.title,
+       a.type,
+       a.description,
+       a.value,
+       a.date,
+       a.created_at,
+       c.title AS category_title
+FROM accounts a
+         LEFT JOIN categories c ON c.id = a.category_id
+WHERE a.user_id = $1
+  AND a.type = $2
+  AND a.title like $3;
+
+-- name: GetAccountsByUserIdAndTypeAndCategoryId :many
+SELECT a.id,
+       a.user_id,
+       a.category_id,
+       a.title,
+       a.type,
+       a.description,
+       a.value,
+       a.date,
+       a.created_at,
+       c.title AS category_title
+FROM accounts a
+         LEFT JOIN categories c ON c.id = a.category_id
+WHERE a.user_id = $1
+  AND a.type = $2
+  AND a.category_id = $3;
+
+-- name: GetAccountsByUserIdAndTypeAndCategoryIdAndTitle :many
+SELECT a.id,
+       a.user_id,
+       a.category_id,
+       a.title,
+       a.type,
+       a.description,
+       a.value,
+       a.date,
+       a.created_at,
+       c.title AS category_title
+FROM accounts a
+         LEFT JOIN categories c ON c.id = a.category_id
+WHERE a.user_id = $1
+  AND a.type = $2
+  AND a.category_id = $3
+  AND a.title like $4;
+
+-- name: GetAccountsByUserIdAndTypeAndCategoryIdAndTitleAndDescription :many
+SELECT a.id,
+       a.user_id,
+       a.category_id,
+       a.title,
+       a.type,
+       a.description,
+       a.value,
+       a.date,
+       a.created_at,
+       c.title AS category_title
+FROM accounts a
+         LEFT JOIN categories c ON c.id = a.category_id
+WHERE a.user_id = $1
+  AND a.type = $2
+  AND a.category_id = $3
+  AND a.title like $4
+  AND a.description like $5;
+
 -- name: GetAccountsReports :one
 SELECT SUM(value) AS sum_value
   FROM accounts
